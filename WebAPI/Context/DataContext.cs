@@ -3,10 +3,12 @@ using WebAPI.Models;
 
 namespace WebAPI.Context
 {
-    public class Context : DbContext
+    public class DataContext : DbContext
     {
-        public Context() : base("Database")
-        { }
+        public DataContext() : base("WebAPI_Db")
+        {
+
+        }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }

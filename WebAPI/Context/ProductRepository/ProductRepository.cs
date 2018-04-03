@@ -7,7 +7,7 @@ namespace WebAPI.Context.ProductRepository
 {
     public class ProductRepository : IDisposable, IProductRepository
     {
-        private Context db = new Context();
+        private DataContext db = new DataContext();
 
         public IEnumerable<Product> GetAllProductsByCategoryId(int categoryId)
         {

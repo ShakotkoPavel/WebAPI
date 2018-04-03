@@ -21,9 +21,10 @@ namespace WebAPI.Controllers
 
         // GET: api/Product
         [Route("GetAllCategories")]
-        public IEnumerable<Category> GetAllCategories()
+        public HttpResponseMessage GetAllCategories()
         {
-            return repository.GetAllCategories();
+            var response = Request.CreateResponse(HttpStatusCode.OK, repository.GetAllCategories());
+            return response;
         }
 
         [Route("GetAllProductsByCategoryId/{id:int}")]
@@ -42,6 +43,7 @@ namespace WebAPI.Controllers
         // POST: api/Product
         public void Post([FromBody]string value)
         {
+
         }
 
         // PUT: api/Product/5

@@ -5,12 +5,8 @@ namespace WebAPI.Context.CategoryRepository
 {
     public interface ICategoryRepository
     {
-        void AddCategory(Category category);
-
-        void Delete(int categoryId);
+        IEnumerable<Category> GetAllCategories();
 
         void Dispose();
-
-        IEnumerable<Category> GetAllCategories();
     }
 }

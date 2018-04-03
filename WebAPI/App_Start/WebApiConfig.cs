@@ -1,8 +1,5 @@
 ﻿using WebAPI.Context.ProductRepository;
 using System.Web.Http;
-using Unity;
-using Unity.Lifetime;
-using ProductStore.Resolver;
 
 namespace WebAPI
 {
@@ -10,10 +7,6 @@ namespace WebAPI
     {
         public static void Register(HttpConfiguration config)
         {
-            var container = new UnityContainer();
-            container.RegisterType<IProductRepository, ProductRepository>(new HierarchicalLifetimeManager());
-            config.DependencyResolver = new UnityResolver(container);
-
             // Маршруты веб-API
             config.MapHttpAttributeRoutes();
 
