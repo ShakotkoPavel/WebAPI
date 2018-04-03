@@ -9,6 +9,7 @@ using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
+    [RoutePrefix("api/Product")]
     public class ProductController : ApiController
     {
         private IProductRepository repository;
@@ -19,17 +20,20 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/Product
+        [Route("GetAllCategories")]
         public IEnumerable<Category> GetAllCategories()
         {
             return repository.GetAllCategories();
         }
 
+        [Route("GetAllProductsByCategoryId/{id:int}")]
         public IEnumerable<Product> GetAllProductsByCategoryId(int categoryId)
         {
             return repository.GetAllProductsByCategoryId(categoryId);
         }
 
         // GET: api/Product/5
+        [Route("GetProductById/{id:int}")]
         public Product GetProductById(int id)
         {
             return repository.GetProductById(id);

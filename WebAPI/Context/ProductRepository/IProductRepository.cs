@@ -5,12 +5,12 @@ namespace WebAPI.Context.ProductRepository
 {
     public interface IProductRepository
     {
-        void Dispose();
-
         IEnumerable<Category> GetAllCategories();
 
         IEnumerable<Product> GetAllProductsByCategoryId(int categoryId);
 
         Product GetProductById(int id);
+
+        void Dispose();
     }
 }
