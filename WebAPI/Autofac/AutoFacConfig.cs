@@ -4,6 +4,7 @@ using WebAPI.Context.ProductRepository;
 using WebAPI.Context.CategoryRepository;
 using System.Reflection;
 using System.Web.Http;
+using WebAPI.Context;
 
 public class AutofacConfig
 {
@@ -18,8 +19,8 @@ public class AutofacConfig
         builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
         // регистрируем споставление типов
-        builder.RegisterType<ProductRepository>().As<IProductRepository>();
-        builder.RegisterType<CategoryRepository>().As<ICategoryRepository>();
+        builder.RegisterType<ProductRepository>().As<IProductRepository>().WithParameter("context", new DataContext());
+        builder.RegisterType<CategoryRepository>().As<ICategoryRepository>().WithParameter("context", new DataContext());
 
         // создаем новый контейнер с теми зависимостями, которые определены выше
         var container = builder.Build();

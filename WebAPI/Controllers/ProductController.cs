@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using WebAPI.Context.ProductRepository;
 using WebAPI.Models;
+using Newtonsoft.Json;
+using System.Web.Http.Results;
 
 namespace WebAPI.Controllers
 {
@@ -21,23 +23,24 @@ namespace WebAPI.Controllers
 
         // GET: api/Product
         [Route("GetAllCategories")]
-        public HttpResponseMessage GetAllCategories()
+        public IHttpActionResult GetAllCategories()
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, repository.GetAllCategories());
-            return response;
+            return Json(repository.GetAllCategories());
         }
 
-        [Route("GetAllProductsByCategoryId/{id:int}")]
-        public IEnumerable<Product> GetAllProductsByCategoryId(int categoryId)
+        [Route("GetAllProductsByCategoryId/{categoryId:int}")]
+        public IHttpActionResult GetAllProductsByCategoryId(int categoryId)
         {
-            return repository.GetAllProductsByCategoryId(categoryId);
+            //if(repository.GetAllCategories().Count() > 0)
+                return Json(repository.GetAllProductsByCategoryId(categoryId));
+            //return 
         }
 
         // GET: api/Product/5
         [Route("GetProductById/{id:int}")]
-        public Product GetProductById(int id)
+        public IHttpActionResult GetProductById(int id)
         {
-            return repository.GetProductById(id);
+            return Json(repository.GetProductById(id));
         }
 
         // POST: api/Product

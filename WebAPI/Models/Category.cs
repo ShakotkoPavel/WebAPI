@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -13,11 +14,11 @@ namespace WebAPI.Models
         [Required]
         public string Name { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        //public virtual ICollection<Product> Products { get; set; }
 
-        public Category()
-        {
-            Products = new List<Product>();
-        }
+        //public Category()
+        //{
+        //    Products = new List<Product>();
+        //}
     }
 }

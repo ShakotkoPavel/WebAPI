@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using WebAPI.Models;
 
@@ -7,17 +8,21 @@ namespace WebAPI.Context.ProductRepository
 {
     public class ProductRepository : IDisposable, IProductRepository
     {
-        private DataContext db = new DataContext();
+        private readonly DataContext db;
+
+        public ProductRepository(DataContext context)
+        {
+            db = context;
+        }
 
         public IEnumerable<Product> GetAllProductsByCategoryId(int categoryId)
         {
-            var category = db.Categories.Find(categoryId);
-            if(category != null)
-            {
-                db.Products.Where(x => x.Category == category).ToList();
-                return db.Products;
-            }
-            return Enumerable.Empty<Product>();
+            //var category = db.Categories.Find(categoryId);
+            //if(category != null)
+            //{
+                return db.Products.Include(p => p.Category).Where(x => x.Category.Id == categoryId).ToList();
+            //}
+            //return Enumerable.Empty<Product>();
         }
 
         public IEnumerable<Category> GetAllCategories()
@@ -37,13 +42,14 @@ namespace WebAPI.Context.ProductRepository
                 if (db != null)
                 {
                     db.Dispose();
-                    db = null;
+                    //db = null;
                 }
             }
         }
 
         public void Dispose()
         {
+
             Dispose(true);
             GC.SuppressFinalize(this);
         }

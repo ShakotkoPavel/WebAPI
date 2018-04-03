@@ -11,7 +11,7 @@ namespace WebAPI
     {
         protected void Application_Start()
         {
-            Database.SetInitializer(new ProductInitializer());
+            //Database.SetInitializer(new ProductInitializer());
             AutofacConfig.ConfigureContainer();
 
             AreaRegistration.RegisterAllAreas();

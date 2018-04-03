@@ -5,9 +5,9 @@ namespace WebAPI.Context
 {
     public class DataContext : DbContext
     {
-        public DataContext() : base("WebAPI_Db")
+        public DataContext() : base("_NewDB")
         {
-
+            Database.SetInitializer(new ProductInitializer());
         }
 
         public DbSet<Product> Products { get; set; }

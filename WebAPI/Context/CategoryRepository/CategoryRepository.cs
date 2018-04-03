@@ -7,7 +7,11 @@ namespace WebAPI.Context.CategoryRepository
 {
     public class CategoryRepository : IDisposable, ICategoryRepository
     {
-        private DataContext db = new DataContext();
+        private readonly DataContext db;// = new DataContext();
+        public CategoryRepository(DataContext context)
+        {
+            db = context;
+        }
 
         public IEnumerable<Category> GetAllCategories()
         {
@@ -21,7 +25,7 @@ namespace WebAPI.Context.CategoryRepository
                 if (db != null)
                 {
                     db.Dispose();
-                    db = null;
+                    //db = null;
                 }
             }
         }

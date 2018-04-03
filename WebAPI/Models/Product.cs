@@ -17,9 +17,6 @@ namespace WebAPI.Models
         public decimal Price { get; set; }
 
         [Required]
-        public int? CategoryId { get; set; }
-
-        [Required]
         public Category Category { get; set; }
     }
 }
