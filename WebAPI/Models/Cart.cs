@@ -9,6 +9,8 @@ namespace WebAPI.Models
 
         public DateTime DataCreated { get; set; }
 
+        public Account Account { get; set; }
+
         public virtual ICollection<Product> Products { get; set; }
 
         public Cart()

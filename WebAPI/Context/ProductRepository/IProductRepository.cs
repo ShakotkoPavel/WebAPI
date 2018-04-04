@@ -11,6 +11,6 @@ namespace WebAPI.Context.ProductRepository
 
         IEnumerable<Product> GetAllProductsByCategoryId(int categoryId);
 
-        void Dispose();
+        //void Dispose();
     }
 }

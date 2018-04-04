@@ -37,26 +37,30 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/Product/5
-        [Route("GetProductById/{id:int}")]
-        public IHttpActionResult GetProductById(int id)
+        [Route("GetProductById/{productId:int}")]
+        public IHttpActionResult GetProductById(int productId)
         {
-            return Json(repository.GetProductById(id));
+            return Json(repository.GetProductById(productId));
         }
 
         // POST: api/Product
-        public void Post([FromBody]string value)
+        [HttpPost]
+        [Route("AddProductToCart/{productId}/{cartId}")]
+        public HttpResponseMessage AddProductToCart(int productId, int messengerId)
         {
-
+            return new HttpResponseMessage(HttpStatusCode.Created);
         }
 
         // PUT: api/Product/5
         public void Put(int id, [FromBody]string value)
         {
+
         }
 
         // DELETE: api/Product/5
         public void Delete(int id)
         {
+
         }
     }
 }

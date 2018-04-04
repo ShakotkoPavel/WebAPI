@@ -6,7 +6,7 @@ using WebAPI.Models;
 
 namespace WebAPI.Context.ProductRepository
 {
-    public class ProductRepository : IDisposable, IProductRepository
+    public class ProductRepository : IProductRepository//, IDisposable
     {
         private readonly DataContext db;
 
@@ -17,12 +17,12 @@ namespace WebAPI.Context.ProductRepository
 
         public IEnumerable<Product> GetAllProductsByCategoryId(int categoryId)
         {
-            //var category = db.Categories.Find(categoryId);
-            //if(category != null)
-            //{
+            var category = db.Categories.Find(categoryId);
+            if (category != null)
+            {
                 return db.Products.Include(p => p.Category).Where(x => x.Category.Id == categoryId).ToList();
-            //}
-            //return Enumerable.Empty<Product>();
+            }
+            return Enumerable.Empty<Product>();
         }
 
         public IEnumerable<Category> GetAllCategories()
@@ -35,23 +35,32 @@ namespace WebAPI.Context.ProductRepository
             return db.Products.FirstOrDefault(p => p.Id == id);
         }
 
-        protected void Dispose(bool disposing)
+        public void AddProductToCart(int productId, int messengerId)
         {
-            if (disposing)
+            var cart = db.Carts.FirstOrDefault(x => x.Account.MessengerId == messengerId);
+
+            if (cart != null)
             {
-                if (db != null)
-                {
-                    db.Dispose();
-                    //db = null;
-                }
+                var newCart = new Cart { };
             }
         }
 
-        public void Dispose()
-        {
+        //protected void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        if (db != null)
+        //        {
+        //            db.Dispose();
+        //            //db = null;
+        //        }
+        //    }
+        //}
 
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+        //public void Dispose()
+        //{
+        //    Dispose(true);
+        //    GC.SuppressFinalize(this);
+        //}
     }
 }

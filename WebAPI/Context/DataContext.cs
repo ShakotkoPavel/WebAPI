@@ -12,6 +12,7 @@ namespace WebAPI.Context
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Cart> ProductsInCart { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Account> Accounts { get; set; }
     }
 }
