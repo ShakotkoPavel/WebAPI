@@ -73,6 +73,18 @@ namespace WebAPI.Context.ProductRepository
             }
         }
 
+        public Account GetAccount(string messengerId)
+        {
+            return db.Accounts.FirstOrDefault(x => x.MessengerID == messengerId);
+        }
+
+        public decimal GetSumOfProducts(Account account)
+        {
+            var cart = db.Carts.FirstOrDefault(x => x.Account.Id == account.Id);
+            var sumOfProducts = cart.Products.Sum(x => x.Price);
+            return sumOfProducts;
+        }
+
         //protected void Dispose(bool disposing)
         //{
         //    if (disposing)

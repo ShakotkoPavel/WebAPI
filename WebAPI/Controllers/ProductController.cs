@@ -57,7 +57,13 @@ namespace WebAPI.Controllers
         [Route("BuyProducts/{messengerID}")]
         public HttpResponseMessage BuyProducts(string messengerId)
         {
-            repository.BuyProducts(messengerId);
+            var account = repository.GetAccount(messengerId);
+            if(account != null)
+            {
+
+                account.Balance = repository.GetSumOfProducts(account);
+                repository.BuyProducts(messengerId);
+            }
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }

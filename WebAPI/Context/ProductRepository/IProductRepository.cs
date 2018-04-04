@@ -14,6 +14,10 @@ namespace WebAPI.Context.ProductRepository
         void AddProductToCart(int productId, string messengerId);
 
         void BuyProducts(string messengerId);
+
+        Account GetAccount(string messengerId);
+
+        decimal GetSumOfProducts(Account account);
         //void Dispose();
     }
 }
