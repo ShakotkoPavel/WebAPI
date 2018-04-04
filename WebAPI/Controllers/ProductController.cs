@@ -45,22 +45,20 @@ namespace WebAPI.Controllers
 
         // POST: api/Product
         [HttpPost]
-        [Route("AddProductToCart/{productId}/{cartId}")]
-        public HttpResponseMessage AddProductToCart(int productId, int messengerId)
+        [Route("AddProductToCart/{productId}/{messengerID}")]
+        public HttpResponseMessage AddProductToCart(int productId, string messengerID = "1234")
         {
+            repository.AddProductToCart(productId, messengerID);
             return new HttpResponseMessage(HttpStatusCode.Created);
         }
 
-        // PUT: api/Product/5
-        public void Put(int id, [FromBody]string value)
-        {
-
-        }
-
         // DELETE: api/Product/5
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("BuyProducts/{messengerID}")]
+        public HttpResponseMessage BuyProducts(string messengerId)
         {
-
+            repository.BuyProducts(messengerId);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }
 }

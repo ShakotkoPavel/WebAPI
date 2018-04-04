@@ -35,13 +35,41 @@ namespace WebAPI.Context.ProductRepository
             return db.Products.FirstOrDefault(p => p.Id == id);
         }
 
-        public void AddProductToCart(int productId, int messengerId)
+        public void AddProductToCart(int productId, string messengerId)
         {
-            var cart = db.Carts.FirstOrDefault(x => x.Account.MessengerId == messengerId);
-
-            if (cart != null)
+            var account = db.Accounts.FirstOrDefault(x => x.MessengerID == messengerId);
+            if (account == null)
             {
-                var newCart = new Cart { };
+                account = new Account { MessengerID = messengerId, Balance = 100 };
+                db.Accounts.Add(account);
+                db.SaveChanges();
+            }
+
+            var cart = db.Carts.FirstOrDefault(x => x.Account.Id == account.Id);
+            if(cart == null)
+            {
+                cart = new Cart { Account = account, DataCreated = DateTime.Now };
+                db.Carts.Add(cart);
+                db.SaveChanges();
+            }
+
+            var product = db.Products.Find(productId);
+
+            if (product != null)
+            {
+                cart.Products.Add(product);
+                db.SaveChanges();
+            }
+        }
+
+        public void BuyProducts(string messengerId)
+        {
+            var account = db.Accounts.FirstOrDefault(x => x.MessengerID == messengerId);
+            if (account != null)
+            {
+                var cart = db.Carts.FirstOrDefault(x => x.Account.Id == account.Id);
+                db.Carts.Remove(cart);
+                db.SaveChanges();
             }
         }
 

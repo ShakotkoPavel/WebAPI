@@ -7,9 +7,9 @@ namespace WebAPI.Models
 {
     public class Account
     {
-        public int Id { get; set; }
+        public int Id{ get; set; }
 
-        public int MessengerId { get; set; }
+        public string MessengerID { get; set; }
 
         public decimal Balance { get; set; }
     }
