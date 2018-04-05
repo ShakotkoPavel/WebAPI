@@ -31,16 +31,20 @@ namespace WebAPI.Controllers
         }
 
         [Route("GetAllProductsByCategoryId/{categoryId:int}")]
-        public IHttpActionResult GetAllProductsByCategoryId(int categoryId)
+        public HttpResponseMessage GetAllProductsByCategoryId(int categoryId)
         {
-            return Json(repository.GetAllProductsByCategoryId(categoryId));
+            HttpResponseMessage httpResponseMessage = Request.CreateResponse(HttpStatusCode.OK, repository.GetAllProductsByCategoryId(categoryId));
+            httpResponseMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            return httpResponseMessage;
         }
 
         [Route("GetProductById/{productId:int}")]
-        public IHttpActionResult GetProductById(int productId)
+        public HttpResponseMessage GetProductById(int productId)
         {
-            return Json(repository.GetProductById(productId));
-        }
+            HttpResponseMessage httpResponseMessage = Request.CreateResponse(HttpStatusCode.OK, repository.GetProductById(productId));
+            httpResponseMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            return httpResponseMessage;
+         }
 
         [HttpPost]
         [Route("AddProductToCart/{productId}/{messengerID}")]

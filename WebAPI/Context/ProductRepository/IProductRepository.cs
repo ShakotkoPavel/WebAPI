@@ -9,7 +9,7 @@ namespace WebAPI.Context.ProductRepository
 
         IEnumerable<string> GetAllCategories();
 
-        IEnumerable<Product> GetAllProductsByCategoryId(int categoryId);
+        IEnumerable<string> GetAllProductsByCategoryId(int categoryId);
 
         void AddProductToCart(int productId, string messengerId);
 

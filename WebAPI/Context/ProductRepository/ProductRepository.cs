@@ -15,14 +15,14 @@ namespace WebAPI.Context.ProductRepository
             db = context;
         }
 
-        public IEnumerable<Product> GetAllProductsByCategoryId(int categoryId)
+        public IEnumerable<string> GetAllProductsByCategoryId(int categoryId)
         {
             var category = db.Categories.Find(categoryId);
             if (category != null)
             {
-                return db.Products.Include(p => p.Category).Where(x => x.Category.Id == categoryId).ToList();
+                return db.Products.Include(p => p.Category).Where(x => x.Category.Id == categoryId).Select(x => x.Name + x.Price.ToString()).ToList();
             }
-            return Enumerable.Empty<Product>();
+            return Enumerable.Empty<string>();
         }
 
         public IEnumerable<string> GetAllCategories()
