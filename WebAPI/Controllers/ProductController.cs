@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
         public HttpResponseMessage GetAllCategories()
         {
             HttpResponseMessage httpResponseMessage = Request.CreateResponse(HttpStatusCode.OK, repository.GetAllCategories());
-            httpResponseMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            httpResponseMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");   
             return httpResponseMessage;
         }
 
