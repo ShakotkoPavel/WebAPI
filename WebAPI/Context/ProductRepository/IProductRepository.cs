@@ -7,17 +7,19 @@ namespace WebAPI.Context.ProductRepository
     {
         Product GetProductById(int id);
 
-        IEnumerable<Category> GetAllCategories();
+        IEnumerable<string> GetAllCategories();
 
         IEnumerable<Product> GetAllProductsByCategoryId(int categoryId);
 
         void AddProductToCart(int productId, string messengerId);
 
-        void BuyProducts(string messengerId);
+        void BuyProducts(Account account);
 
-        Account GetAccount(string messengerId);
+        bool CheckBalance(string messengerId);
 
         decimal GetSumOfProducts(Account account);
+
+        Account GetAccount(string messengerId);
         //void Dispose();
     }
 }

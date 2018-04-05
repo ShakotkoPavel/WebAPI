@@ -25,9 +25,9 @@ namespace WebAPI.Context.ProductRepository
             return Enumerable.Empty<Product>();
         }
 
-        public IEnumerable<Category> GetAllCategories()
+        public IEnumerable<string> GetAllCategories()
         {
-            return db.Categories;
+            return db.Categories.Select(x => x.Name);
         }
 
         public Product GetProductById(int id)
@@ -62,15 +62,11 @@ namespace WebAPI.Context.ProductRepository
             }
         }
 
-        public void BuyProducts(string messengerId)
+        public void BuyProducts(Account account)
         {
-            var account = db.Accounts.FirstOrDefault(x => x.MessengerID == messengerId);
-            if (account != null)
-            {
-                var cart = db.Carts.FirstOrDefault(x => x.Account.Id == account.Id);
-                db.Carts.Remove(cart);
-                db.SaveChanges();
-            }
+            var cart = db.Carts.FirstOrDefault(x => x.Account.Id == account.Id);
+            db.Carts.Remove(cart);
+            db.SaveChanges();
         }
 
         public Account GetAccount(string messengerId)
@@ -83,6 +79,20 @@ namespace WebAPI.Context.ProductRepository
             var cart = db.Carts.FirstOrDefault(x => x.Account.Id == account.Id);
             var sumOfProducts = cart.Products.Sum(x => x.Price);
             return sumOfProducts;
+        }
+
+        public bool CheckBalance(string messengerId)
+        {
+            var account = GetAccount(messengerId);
+            if(account != null)
+            {
+                var sum = GetSumOfProducts(account);
+                if(account.Balance >= sum)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         //protected void Dispose(bool disposing)

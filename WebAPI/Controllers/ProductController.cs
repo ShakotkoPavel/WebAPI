@@ -8,6 +8,7 @@ using WebAPI.Context.ProductRepository;
 using WebAPI.Models;
 using Newtonsoft.Json;
 using System.Web.Http.Results;
+using System.Text;
 
 namespace WebAPI.Controllers
 {
@@ -21,29 +22,26 @@ namespace WebAPI.Controllers
             repository = rep;
         }
 
-        // GET: api/Product
         [Route("GetAllCategories")]
-        public IHttpActionResult GetAllCategories()
+        public HttpResponseMessage GetAllCategories()
         {
-            return Json(repository.GetAllCategories());
+            HttpResponseMessage httpResponseMessage = Request.CreateResponse(HttpStatusCode.OK, repository.GetAllCategories());
+            httpResponseMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            return httpResponseMessage;
         }
 
         [Route("GetAllProductsByCategoryId/{categoryId:int}")]
         public IHttpActionResult GetAllProductsByCategoryId(int categoryId)
         {
-            //if(repository.GetAllCategories().Count() > 0)
-                return Json(repository.GetAllProductsByCategoryId(categoryId));
-            //return 
+            return Json(repository.GetAllProductsByCategoryId(categoryId));
         }
 
-        // GET: api/Product/5
         [Route("GetProductById/{productId:int}")]
         public IHttpActionResult GetProductById(int productId)
         {
             return Json(repository.GetProductById(productId));
         }
 
-        // POST: api/Product
         [HttpPost]
         [Route("AddProductToCart/{productId}/{messengerID}")]
         public HttpResponseMessage AddProductToCart(int productId, string messengerID = "1234")
@@ -52,17 +50,14 @@ namespace WebAPI.Controllers
             return new HttpResponseMessage(HttpStatusCode.Created);
         }
 
-        // DELETE: api/Product/5
         [HttpDelete]
         [Route("BuyProducts/{messengerID}")]
         public HttpResponseMessage BuyProducts(string messengerId)
         {
-            var account = repository.GetAccount(messengerId);
-            if(account != null)
+            if(repository.CheckBalance(messengerId))
             {
-
-                account.Balance = repository.GetSumOfProducts(account);
-                repository.BuyProducts(messengerId);
+                var account = repository.GetAccount(messengerId);
+                repository.BuyProducts(account);
             }
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
